@@ -1,0 +1,18 @@
+{
+  "name": "TestCallingApp",
+  "label": "TestCallingApp",
+  "description": "Test calling integration",
+  "scopes": ["crm.objects.contacts.read","calling.read","calling.write"],
+  "auth": {
+    "type": "oauth2",
+    "scopes": ["crm.objects.contacts.read","calling.read","calling.write"]
+  },
+  "uiExtensions": {
+    "crm": {
+      "card": {
+        "file": "src/app/extensions/ExampleCard.jsx"
+      }
+    }
+  },
+  "allowedUrls": ["https://your-backend-domain.com"]
+}
