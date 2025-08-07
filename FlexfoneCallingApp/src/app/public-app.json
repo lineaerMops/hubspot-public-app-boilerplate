@@ -2,9 +2,9 @@
   "name": "FlexfoneCallingApp",
   "uid": "flexfone-calling-app",
   "description": "Calling integration med Flexfone - HubSpot app til opkald og call tracking",
-  "allowedUrls": ["https://api.flexfone.com", "https://your-backend-domain.com"],
+  "allowedUrls": ["https://api.flexfone.com", "https://hubspot-public-app-boilerplate.vercel.app"],
   "auth": {
-    "redirectUrls": ["http://localhost:3000/oauth-callback"],
+    "redirectUrls": ["https://hubspot-public-app-boilerplate.vercel.app/oauth-callback"],
     "requiredScopes": ["crm.objects.contacts.read", "crm.objects.contacts.write"],
     "optionalScopes": ["crm.objects.companies.read", "crm.objects.deals.read"],
     "conditionallyRequiredScopes": []

@@ -1,6 +1,6 @@
 {
   "settings": {
-    "targetUrl": "https://your-backend-domain.com/webhook",
+    "targetUrl": "https://hubspot-public-app-boilerplate.vercel.app/webhook",
     "maxConcurrentRequests": 10
   },
   "subscriptions": {

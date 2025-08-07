@@ -28,7 +28,7 @@ async function activateCallingSettings() {
     
     const callingSettings = {
       "name": "Flexfone Calling",
-      "url": "https://your-backend-domain.com/flexfone-calling-widget",
+      "url": "https://hubspot-public-app-boilerplate.vercel.app/flexfone-calling-widget",
       "height": 600,
       "width": 400,
       "isReady": true,
