@@ -274,7 +274,7 @@ app.get('/flexfone-calling-widget', (req, res) => {
             console.log('Received SYNC message from HubSpot');
             
             // Send sync response to HubSpot
-            window.parent.postMessage({
+            const syncResponse = {
               type: 'SYNC_RESPONSE',
               data: {
                 isReady: true,
@@ -286,7 +286,11 @@ app.get('/flexfone-calling-widget', (req, res) => {
                   canLogCalls: true
                 }
               }
-            }, '*');
+            };
+            
+            console.log('Sending SYNC_RESPONSE to HubSpot:', syncResponse);
+            window.parent.postMessage(syncResponse, '*');
+            console.log('SYNC_RESPONSE sent successfully');
           }
           
           if (event.data.type === 'OUTGOING_CALL') {
