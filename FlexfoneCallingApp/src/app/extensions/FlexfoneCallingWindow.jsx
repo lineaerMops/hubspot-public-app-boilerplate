@@ -3,10 +3,8 @@ import {
   Button,
   Text,
   Card,
-  Badge,
   hubspot,
-  useCrmObject,
-} from '@hubspot/ui-extensions-react';
+} from '@hubspot/ui-extensions';
 
 // Flexfone Window Calling Component
 hubspot.extend(({ context, actions }) => {
@@ -17,7 +15,7 @@ hubspot.extend(({ context, actions }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [callHistory, setCallHistory] = useState([]);
   
-  const { crmObject } = useCrmObject();
+  const { crmObject } = context;
 
   // Get contact phone number from CRM object
   useEffect(() => {
@@ -215,9 +213,16 @@ hubspot.extend(({ context, actions }) => {
         <Text variant="heading" style={{ marginRight: '8px' }}>
           Flexfone Calling Window
         </Text>
-        <Badge variant={isConnected ? 'success' : 'default'}>
-          {isConnected ? 'Tilsluttet' : 'Ikke tilsluttet'}
-        </Badge>
+                  <div style={{ 
+            display: 'inline-block', 
+            padding: '4px 8px', 
+            backgroundColor: isConnected ? '#10b981' : '#6b7280',
+            color: 'white',
+            borderRadius: '4px',
+            fontSize: '12px'
+          }}>
+            {isConnected ? 'Tilsluttet' : 'Ikke tilsluttet'}
+          </div>
       </div>
 
       {/* Connection Status */}
@@ -310,9 +315,18 @@ hubspot.extend(({ context, actions }) => {
               )}
             </div>
             
-            <Badge variant={getCallStatusColor()}>
+            <div style={{ 
+              display: 'inline-block', 
+              padding: '4px 8px', 
+              backgroundColor: getCallStatusColor() === 'success' ? '#10b981' : 
+                             getCallStatusColor() === 'warning' ? '#f59e0b' : 
+                             getCallStatusColor() === 'info' ? '#3b82f6' : '#6b7280',
+              color: 'white',
+              borderRadius: '4px',
+              fontSize: '12px'
+            }}>
               {getCallStatusText()}
-            </Badge>
+            </div>
           </div>
         </Card>
       )}
@@ -354,9 +368,16 @@ hubspot.extend(({ context, actions }) => {
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span>{new Date(call.timestamp).toLocaleString('da-DK')}</span>
-                    <Badge variant={call.status === 'completed' ? 'success' : 'default'}>
+                    <div style={{ 
+                      display: 'inline-block', 
+                      padding: '4px 8px', 
+                      backgroundColor: call.status === 'completed' ? '#10b981' : '#6b7280',
+                      color: 'white',
+                      borderRadius: '4px',
+                      fontSize: '12px'
+                    }}>
                       {call.status === 'completed' ? 'Gennemført' : 'Ikke besvaret'}
-                    </Badge>
+                    </div>
                   </div>
                   <div>Nummer: {call.phoneNumber}</div>
                   <div>Varighed: {call.duration}s</div>
