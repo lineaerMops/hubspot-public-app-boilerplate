@@ -270,6 +270,25 @@ app.get('/flexfone-calling-widget', (req, res) => {
             }, '*');
           }
           
+          if (event.data.type === 'SYNC') {
+            console.log('Received SYNC message from HubSpot');
+            
+            // Send sync response to HubSpot
+            window.parent.postMessage({
+              type: 'SYNC_RESPONSE',
+              data: {
+                isReady: true,
+                isConnected: true,
+                currentCall: currentCall,
+                capabilities: {
+                  canMakeCalls: true,
+                  canReceiveCalls: true,
+                  canLogCalls: true
+                }
+              }
+            }, '*');
+          }
+          
           if (event.data.type === 'OUTGOING_CALL') {
             console.log('Making outgoing call:', event.data.data);
             makeCallFromHubSpot(event.data.data);
