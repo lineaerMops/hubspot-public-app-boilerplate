@@ -5,6 +5,21 @@ const app = express();
 // Get port from environment or default to 3000
 const port = process.env.PORT || 3000;
 
+// CORS middleware for HubSpot domains
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 // OAuth configuration - use environment variables for production
 const CLIENT_ID = process.env.HUBSPOT_CLIENT_ID || '9055da32-6363-46ab-b4e7-1af284cf80de';
 const CLIENT_SECRET = process.env.HUBSPOT_CLIENT_SECRET || '3da2d0e7-b8dc-4a5d-8ab9-30bf0ff188e2';

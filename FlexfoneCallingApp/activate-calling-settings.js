@@ -34,7 +34,7 @@ async function activateCallingSettings() {
       "isReady": true,
       "supportsInboundCalling": true,
       "usesCallingWindow": true,
-      "usesRemote": false,
+      "usesRemote": true,
       "supportedCallTypes": ["outbound", "inbound"],
       "supportedObjectTypes": ["contact", "company"],
       "capabilities": {

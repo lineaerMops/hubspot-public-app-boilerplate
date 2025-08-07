@@ -19,7 +19,7 @@ async function updateCallingSettings() {
       "isReady": true,
       "supportsInboundCalling": true,
       "usesCallingWindow": true,
-      "usesRemote": false
+      "usesRemote": true
     };
     
     try {
