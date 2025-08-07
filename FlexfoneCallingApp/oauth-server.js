@@ -340,11 +340,11 @@ app.get('/flexfone-calling-widget', (req, res) => {
                       data: currentCall
                     }, '*');
                     
-                    // Show call duration
-                    const callDuration = setInterval(() => {
-                      const duration = Math.floor((Date.now() - currentCall.startTime) / 1000);
-                      button.textContent = `I samtale (${duration}s)`;
-                    }, 1000);
+                                // Show call duration
+            const callDuration = setInterval(() => {
+              const duration = Math.floor((Date.now() - new Date(currentCall.startTime)) / 1000);
+              button.textContent = `I samtale (${duration}s)`;
+            }, 1000);
                     
                     // Store interval for cleanup
                     currentCall.durationInterval = callDuration;
@@ -389,7 +389,7 @@ app.get('/flexfone-calling-widget', (req, res) => {
             
             // Show call duration
             const callDuration = setInterval(() => {
-              const duration = Math.floor((Date.now() - currentCall.startTime) / 1000);
+              const duration = Math.floor((Date.now() - new Date(currentCall.startTime)) / 1000);
               button.textContent = `I samtale (${duration}s)`;
             }, 1000);
             
