@@ -21,35 +21,73 @@ hubspot.extend(({ context, actions }) => {
   useEffect(() => {
     const initializeCallingSDK = async () => {
       try {
+        // Initialize the calling widget iframe
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://hubspot-public-app-boilerplate.vercel.app/flexfone-calling-widget';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        
+        // Listen for messages from the calling widget
+        window.addEventListener('message', (event) => {
+          console.log('Received message from calling widget:', event.data);
+          
+          if (event.data.type === 'WIDGET_READY') {
+            console.log('Calling widget is ready');
+            setIsConnected(true);
+            
+            // Send INIT message to widget
+            iframe.contentWindow.postMessage({
+              type: 'INIT',
+              data: {
+                contactId: crmObject?.id,
+                contactPhone: contactPhone
+              }
+            }, '*');
+          }
+          
+          if (event.data.type === 'CALL_STARTED') {
+            console.log('Call started:', event.data.data);
+            setCurrentCall(event.data.data);
+            setCallStatus('connected');
+          }
+          
+          if (event.data.type === 'CALL_ENDED') {
+            console.log('Call ended:', event.data.data);
+            setCallStatus('idle');
+            setCurrentCall(null);
+          }
+        });
+        
+        // Initialize Calling Extensions SDK for HubSpot integration
         await CallingExtensions.init({
           debug: true,
           onReady: () => {
             console.log('Calling Extensions SDK ready');
-            setIsConnected(true);
           },
           onCallStart: (callData) => {
-            console.log('Call started:', callData);
+            console.log('HubSpot call started:', callData);
             setCurrentCall(callData);
             setCallStatus('connected');
           },
           onCallEnd: (callData) => {
-            console.log('Call ended:', callData);
+            console.log('HubSpot call ended:', callData);
             setCallStatus('idle');
             setCurrentCall(null);
           },
           onIncomingCall: (callData) => {
-            console.log('Incoming call:', callData);
+            console.log('HubSpot incoming call:', callData);
             setCurrentCall(callData);
             setCallStatus('incoming');
           }
         });
+        
       } catch (error) {
         console.error('Error initializing Calling SDK:', error);
       }
     };
 
     initializeCallingSDK();
-  }, []);
+  }, [crmObject, contactPhone]);
 
   // Get contact phone number from CRM object
   useEffect(() => {
@@ -103,7 +141,20 @@ hubspot.extend(({ context, actions }) => {
     setIsLoading(true);
     
     try {
-      // Use Calling Extensions SDK to make call
+      // Send message to calling widget
+      const iframe = document.querySelector('iframe[src*="flexfone-calling-widget"]');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({
+          type: 'OUTGOING_CALL',
+          data: {
+            phoneNumber: contactPhone,
+            contactId: crmObject?.id,
+            callType: 'outbound'
+          }
+        }, '*');
+      }
+      
+      // Also use Calling Extensions SDK for HubSpot integration
       await CallingExtensions.outgoingCall({
         phoneNumber: contactPhone,
         contactId: crmObject?.id,
@@ -134,7 +185,16 @@ hubspot.extend(({ context, actions }) => {
     setIsLoading(true);
     
     try {
-      // Use Calling Extensions SDK to end call
+      // Send message to calling widget
+      const iframe = document.querySelector('iframe[src*="flexfone-calling-widget"]');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({
+          type: 'END_CALL',
+          data: currentCall
+        }, '*');
+      }
+      
+      // Also use Calling Extensions SDK for HubSpot integration
       await CallingExtensions.endCall(currentCall.id);
       
       actions.addAlert({
