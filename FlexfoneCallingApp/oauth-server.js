@@ -242,27 +242,121 @@ app.get('/flexfone-calling-widget', (req, res) => {
       </div>
       
       <script>
-        function makeCall() {
-          const phoneNumber = document.getElementById('phoneNumber').value;
-          const button = document.getElementById('callButton');
+        // HubSpot Calling Extensions SDK Integration
+        let isInitialized = false;
+        let currentCall = null;
+        
+        // Listen for messages from HubSpot
+        window.addEventListener('message', function(event) {
+          console.log('Received message from HubSpot:', event.data);
           
-          if (!phoneNumber) {
-            alert('Indtast venligst et telefonnummer');
-            return;
+          // Handle different message types
+          if (event.data.type === 'INIT') {
+            console.log('Initializing calling widget...');
+            isInitialized = true;
+            
+            // Send ready response
+            window.parent.postMessage({
+              type: 'READY',
+              data: {
+                isReady: true,
+                supportsCustomObjects: false,
+                capabilities: {
+                  canMakeCalls: true,
+                  canReceiveCalls: true,
+                  canLogCalls: true
+                }
+              }
+            }, '*');
           }
+          
+          if (event.data.type === 'OUTGOING_CALL') {
+            console.log('Making outgoing call:', event.data.data);
+            makeCallFromHubSpot(event.data.data);
+          }
+          
+          if (event.data.type === 'END_CALL') {
+            console.log('Ending call');
+            endCall();
+          }
+        });
+        
+        function makeCallFromHubSpot(callData) {
+          const phoneNumber = callData.phoneNumber;
+          const button = document.getElementById('callButton');
           
           button.disabled = true;
           button.textContent = 'Ringer...';
           
           // Simulate call
           setTimeout(() => {
-            button.textContent = 'Opkald startet';
-            setTimeout(() => {
-              button.disabled = false;
-              button.textContent = 'Ring op';
-            }, 2000);
+            currentCall = {
+              id: Date.now(),
+              phoneNumber: phoneNumber,
+              status: 'connected'
+            };
+            
+            button.textContent = 'I samtale';
+            
+            // Notify HubSpot that call started
+            window.parent.postMessage({
+              type: 'CALL_STARTED',
+              data: currentCall
+            }, '*');
+            
           }, 1000);
         }
+        
+        function endCall() {
+          const button = document.getElementById('callButton');
+          
+          if (currentCall) {
+            // Notify HubSpot that call ended
+            window.parent.postMessage({
+              type: 'CALL_ENDED',
+              data: currentCall
+            }, '*');
+            
+            currentCall = null;
+          }
+          
+          button.disabled = false;
+          button.textContent = 'Ring op';
+        }
+        
+        function makeCall() {
+          const phoneNumber = document.getElementById('phoneNumber').value;
+          
+          if (!phoneNumber) {
+            alert('Indtast venligst et telefonnummer');
+            return;
+          }
+          
+          // Use HubSpot SDK if available
+          if (window.parent && isInitialized) {
+            window.parent.postMessage({
+              type: 'OUTGOING_CALL',
+              data: {
+                phoneNumber: phoneNumber,
+                callType: 'outbound'
+              }
+            }, '*');
+          } else {
+            // Fallback to local call
+            makeCallFromHubSpot({ phoneNumber: phoneNumber });
+          }
+        }
+        
+        // Send ready signal when page loads
+        window.addEventListener('load', function() {
+          console.log('Calling widget loaded');
+          window.parent.postMessage({
+            type: 'WIDGET_READY',
+            data: {
+              isReady: true
+            }
+          }, '*');
+        });
       </script>
     </body>
     </html>
