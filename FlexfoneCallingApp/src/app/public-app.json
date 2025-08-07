@@ -1,0 +1,27 @@
+{
+  "name": "FlexfoneCallingApp",
+  "uid": "flexfone-calling-app",
+  "description": "Calling integration med Flexfone - HubSpot app til opkald og call tracking",
+  "allowedUrls": ["https://api.flexfone.com", "https://your-backend-domain.com"],
+  "auth": {
+    "redirectUrls": ["http://localhost:3000/oauth-callback"],
+    "requiredScopes": ["crm.objects.contacts.read", "crm.objects.contacts.write"],
+    "optionalScopes": ["crm.objects.companies.read", "crm.objects.deals.read"],
+    "conditionallyRequiredScopes": []
+  },
+  "support": {
+    "supportEmail": "support@flexfone.com",
+    "documentationUrl": "https://docs.flexfone.com/hubspot-integration",
+    "supportUrl": "https://support.flexfone.com",
+    "supportPhone": "+4570203040"
+  },
+  "extensions": {
+    "crm": {
+      "cards": [
+        {
+          "file": "./extensions/flexfone-calling-card.json"
+        }
+      ]
+    }
+  }
+}

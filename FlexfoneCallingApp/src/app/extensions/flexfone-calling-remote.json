@@ -1,0 +1,11 @@
+{
+  "type": "calling-remote",
+  "data": {
+    "title": "Flexfone Calling",
+    "description": "Opkald og call tracking med Flexfone integration",
+    "uid": "flexfone-calling-remote",
+    "module": {
+      "file": "FlexfoneCallingRemote.jsx"
+    }
+  }
+}

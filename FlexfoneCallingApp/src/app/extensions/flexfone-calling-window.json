@@ -1,0 +1,11 @@
+{
+  "type": "calling-window",
+  "data": {
+    "title": "Flexfone Calling Window",
+    "description": "Calling interface i popup vindue",
+    "uid": "flexfone-calling-window",
+    "module": {
+      "file": "FlexfoneCallingWindow.jsx"
+    }
+  }
+}

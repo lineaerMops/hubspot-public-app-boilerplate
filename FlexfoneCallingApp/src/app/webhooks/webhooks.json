@@ -1,0 +1,27 @@
+{
+  "settings": {
+    "targetUrl": "https://your-backend-domain.com/webhook",
+    "maxConcurrentRequests": 10
+  },
+  "subscriptions": {
+    "crmObjects": [
+      {
+        "subscriptionType": "object.creation",
+        "objectName": "contact",
+        "active": true
+      }
+    ],
+    "legacyCrmObjects": [
+      {
+        "subscriptionType": "contact.deletion",
+        "active": true
+      }
+    ],
+    "hubEvents": [
+      {
+        "subscriptionType": "contact.privacyDeletion",
+        "active": true
+      }
+    ]
+  }
+}

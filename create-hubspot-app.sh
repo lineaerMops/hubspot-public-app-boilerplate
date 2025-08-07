@@ -40,8 +40,8 @@ check_prerequisites() {
     fi
     
     # Check if user is authenticated
-    if ! hs auth status &> /dev/null; then
-        print_error "Not authenticated with HubSpot. Please run: hs auth"
+    if ! hs account list &> /dev/null; then
+        print_error "Not authenticated with HubSpot. Please run: hs account auth"
         exit 1
     fi
     

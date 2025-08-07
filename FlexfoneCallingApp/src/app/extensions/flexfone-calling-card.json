@@ -1,0 +1,20 @@
+{
+  "type": "crm-card",
+  "data": {
+    "title": "Flexfone Calling",
+    "description": "Opkald og call tracking med Flexfone integration",
+    "uid": "flexfone-calling-card",
+    "location": "crm.record.tab",
+    "module": {
+      "file": "FlexfoneCallingCard.jsx"
+    },
+    "objectTypes": [
+      {
+        "name": "contacts"
+      },
+      {
+        "name": "companies"
+      }
+    ]
+  }
+}
