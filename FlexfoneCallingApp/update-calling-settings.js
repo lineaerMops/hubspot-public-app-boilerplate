@@ -16,10 +16,10 @@ async function updateCallingSettings() {
       "url": "https://hubspot-public-app-boilerplate.vercel.app/flexfone-calling-widget",
       "height": 600,
       "width": 400,
-      "isReady": false, // Set to false so HubSpot doesn't try to connect
+      "isReady": true,
       "supportsInboundCalling": true,
       "usesCallingWindow": true,
-      "usesRemote": true
+      "usesRemote": false
     };
     
     try {
