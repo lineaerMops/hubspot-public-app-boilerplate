@@ -21,15 +21,15 @@ vercel
 Efter deployment, gå til Vercel dashboard og sæt følgende miljøvariabler:
 
 ```
-HUBSPOT_CLIENT_ID=your_hubspot_client_id_here
-HUBSPOT_CLIENT_SECRET=your_hubspot_client_secret_here
-REDIRECT_URI=https://your-app-name.vercel.app/oauth-callback
+HUBSPOT_CLIENT_ID=9055da32-6363-46ab-b4e7-1af284cf80de
+HUBSPOT_CLIENT_SECRET=3da2d0e7-b8dc-4a5d-8ab9-30bf0ff188e2
+REDIRECT_URI=https://hubspot-public-app-boilerplate.vercel.app/oauth-callback
 ```
 
 ### 5. Opdater HubSpot App konfiguration
 1. Gå til HubSpot Developer Account
 2. Find FlexfoneCallingApp
-3. Opdater Redirect URI til: `https://your-app-name.vercel.app/oauth-callback`
+3. Opdater Redirect URI til: `https://hubspot-public-app-boilerplate.vercel.app/oauth-callback`
 
 ## 🔧 Lokal Development
 
@@ -48,6 +48,6 @@ npm start
 ## 🌐 Vercel URLs
 
 Efter deployment får du en URL som:
-- `https://your-app-name.vercel.app`
-- `https://your-app-name.vercel.app/oauth-callback` (OAuth callback)
-- `https://your-app-name.vercel.app/health` (Health check)
+- `https://hubspot-public-app-boilerplate.vercel.app`
+- `https://hubspot-public-app-boilerplate.vercel.app/oauth-callback` (OAuth callback)
+- `https://hubspot-public-app-boilerplate.vercel.app/health` (Health check)

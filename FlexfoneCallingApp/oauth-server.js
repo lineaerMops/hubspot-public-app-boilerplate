@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 // OAuth configuration - use environment variables for production
 const CLIENT_ID = process.env.HUBSPOT_CLIENT_ID || '9055da32-6363-46ab-b4e7-1af284cf80de';
 const CLIENT_SECRET = process.env.HUBSPOT_CLIENT_SECRET || '3da2d0e7-b8dc-4a5d-8ab9-30bf0ff188e2';
-const REDIRECT_URI = process.env.REDIRECT_URI || `http://localhost:${port}/oauth-callback`;
+const REDIRECT_URI = process.env.REDIRECT_URI || 'https://hubspot-public-app-boilerplate.vercel.app/oauth-callback';
 const SCOPES = 'crm.objects.contacts.read crm.objects.contacts.write';
 
 app.use(express.json());
