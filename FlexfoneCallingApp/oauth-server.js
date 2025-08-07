@@ -110,6 +110,150 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Flexfone OAuth server is running' });
 });
 
+// Calling widget endpoint
+app.get('/flexfone-calling-widget', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Flexfone Calling Widget</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          margin: 0;
+          padding: 20px;
+          background: #f8f9fa;
+        }
+        .widget-container {
+          background: white;
+          border-radius: 8px;
+          padding: 20px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          max-width: 400px;
+        }
+        .header {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+        }
+        .logo {
+          width: 32px;
+          height: 32px;
+          background: #ff6b35;
+          border-radius: 6px;
+          margin-right: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: bold;
+          font-size: 16px;
+        }
+        .title {
+          font-size: 18px;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin: 0;
+        }
+        .status {
+          display: inline-block;
+          padding: 4px 12px;
+          background: #10b981;
+          color: white;
+          border-radius: 20px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+        .phone-input {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          font-size: 16px;
+          margin-bottom: 16px;
+        }
+        .call-button {
+          width: 100%;
+          padding: 12px;
+          background: #ff6b35;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .call-button:hover {
+          background: #e55a2b;
+        }
+        .call-button:disabled {
+          background: #9ca3af;
+          cursor: not-allowed;
+        }
+        .info {
+          margin-top: 16px;
+          padding: 12px;
+          background: #f3f4f6;
+          border-radius: 6px;
+          font-size: 14px;
+          color: #6b7280;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="widget-container">
+        <div class="header">
+          <div class="logo">F</div>
+          <div>
+            <h1 class="title">Flexfone Calling</h1>
+            <span class="status">Online</span>
+          </div>
+        </div>
+        
+        <input type="tel" class="phone-input" placeholder="Indtast telefonnummer" id="phoneNumber">
+        
+        <button class="call-button" onclick="makeCall()" id="callButton">
+          Ring op
+        </button>
+        
+        <div class="info">
+          <strong>Demo Version</strong><br>
+          Dette er en demo af Flexfone Calling integration.<br>
+          I produktion vil dette integrere med Flexfone API.
+        </div>
+      </div>
+      
+      <script>
+        function makeCall() {
+          const phoneNumber = document.getElementById('phoneNumber').value;
+          const button = document.getElementById('callButton');
+          
+          if (!phoneNumber) {
+            alert('Indtast venligst et telefonnummer');
+            return;
+          }
+          
+          button.disabled = true;
+          button.textContent = 'Ringer...';
+          
+          // Simulate call
+          setTimeout(() => {
+            button.textContent = 'Opkald startet';
+            setTimeout(() => {
+              button.disabled = false;
+              button.textContent = 'Ring op';
+            }, 2000);
+          }, 1000);
+        }
+      </script>
+    </body>
+    </html>
+  `);
+});
+
 // Start server (only if not in Vercel)
 if (process.env.NODE_ENV !== 'production') {
   app.listen(port, () => {
